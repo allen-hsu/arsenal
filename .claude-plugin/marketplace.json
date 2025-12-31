@@ -1,0 +1,22 @@
+{
+  "name": "ClaudeKit",
+  "owner": {
+    "name": "AllenHsu"
+  },
+  "description": "Allen's personal collection of Claude Code skills and plugins",
+  "plugins": [
+    {
+      "name": "tech-lead-skills",
+      "description": "Skills for tech leads: tech spec writing, feature planning, and technical documentation",
+      "source": "./",
+      "strict": false,
+      "skills": ["./skills/tech-spec-writer"]
+    },
+    {
+      "name": "git-commands",
+      "description": "Custom git workflow commands with conventional commits",
+      "source": "./",
+      "commands": ["./commands/commit.md"]
+    }
+  ]
+}
