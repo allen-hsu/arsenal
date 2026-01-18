@@ -4,28 +4,49 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-ClaudeKit is a Claude Code plugin marketplace containing custom skills. It is registered as a plugin marketplace via `.claude-plugin/marketplace.json` and can be installed in Claude Code to extend its capabilities.
+Arsenal is a Claude Code plugin marketplace containing custom skills and commands. It is registered as a plugin marketplace via `.claude-plugin/marketplace.json` and can be installed in Claude Code to extend its capabilities.
 
 ## Repository Structure
 
 ```
-claudekit/
+arsenal/
 ├── .claude-plugin/
-│   └── marketplace.json    # Plugin marketplace configuration
-├── skills/                 # Custom Claude Code skills
-│   └── tech-spec-writer/   # Tech spec document generation skill
-│       ├── SKILL.md        # Skill definition (frontmatter + workflow)
-│       └── references/     # Supporting templates and guides
-├── commands/               # Custom slash commands (empty)
-└── mcp/                    # MCP server configurations (empty)
+│   └── marketplace.json        # Plugin marketplace configuration
+├── plugins/                    # Each plugin has its own isolated directory
+│   ├── tech-lead/
+│   │   └── skills/
+│   │       └── tech-spec-writer/
+│   ├── git-commands/
+│   │   └── commands/
+│   │       └── commit.md
+│   └── react-native-mobile/
+│       ├── skills/
+│       │   ├── react-native-mobile-dev/
+│       │   ├── react-native-mobile-design/
+│       │   └── react-native-mobile-devops/
+│       └── commands/
+│           ├── eas-build.md
+│           ├── eas-deploy.md
+│           └── eas-workflow.md
+└── CLAUDE.md
 ```
 
-## Skill Development
+## Plugin Development
+
+### Why Isolated Plugin Directories?
+
+Each plugin must have its own directory under `plugins/` to prevent Claude Code from incorrectly loading skills/commands from other plugins. When plugins share the same source directory, the cache includes all files, causing cross-contamination.
+
+### Plugin Structure
+
+Each plugin lives in `plugins/<plugin-name>/` and can contain:
+- `skills/` - Directory containing skill subdirectories
+- `commands/` - Directory containing command `.md` files
 
 ### Skill Structure
 
-Each skill lives in `skills/<skill-name>/` and requires:
-- `SKILL.md` - Main skill file with YAML frontmatter (`name`, `description`) and markdown content defining the workflow
+Each skill requires:
+- `SKILL.md` - Main skill file with YAML frontmatter (`name`, `description`) and markdown content
 - `references/` - Optional directory for supporting files (templates, guides)
 
 ### Skill Frontmatter Format
@@ -37,17 +58,29 @@ description: Description including trigger conditions. Use when (1)..., (2)..., 
 ---
 ```
 
-The description should include specific trigger conditions so Claude Code knows when to invoke the skill.
+### Command Structure
 
-### Registering Skills
+Commands are single `.md` files with YAML frontmatter:
 
-Add skills to `.claude-plugin/marketplace.json` under `plugins[].skills` array:
+```yaml
+---
+description: What the command does
+allowed-tools: Bash(git status:*), Bash(git diff:*)
+---
+```
+
+### Registering in marketplace.json
 
 ```json
 {
-  "skills": ["./skills/skill-name"]
+  "name": "plugin-name",
+  "source": "./plugins/plugin-name",
+  "skills": ["./skills/skill-name"],
+  "commands": ["./commands/command-name.md"]
 }
 ```
+
+**Important:** The `source` path must point to the plugin's isolated directory, not the repository root.
 
 ## External Marketplaces
 

@@ -1,22 +1,38 @@
 {
-  "name": "ClaudeKit",
+  "name": "arsenal",
   "owner": {
     "name": "AllenHsu"
   },
-  "description": "Allen's personal collection of Claude Code skills and plugins",
+  "description": "A collection of AI skills, commands, and plugins for Claude Code",
   "plugins": [
     {
-      "name": "tech-lead-skills",
-      "description": "Skills for tech leads: tech spec writing, feature planning, and technical documentation",
-      "source": "./",
+      "name": "tech-lead",
+      "description": "Tech leads: tech spec writing, feature planning, and technical documentation",
+      "source": "./plugins/tech-lead",
       "strict": false,
       "skills": ["./skills/tech-spec-writer"]
     },
     {
       "name": "git-commands",
       "description": "Custom git workflow commands with conventional commits",
-      "source": "./",
+      "source": "./plugins/git-commands",
       "commands": ["./commands/commit.md"]
+    },
+    {
+      "name": "react-native-mobile",
+      "description": "Complete React Native + Expo mobile development: app architecture, UI patterns, state management, design systems, animations, and DevOps (EAS Build, Submit, Update, Workflows)",
+      "source": "./plugins/react-native-mobile",
+      "strict": false,
+      "skills": [
+        "./skills/react-native-mobile-dev",
+        "./skills/react-native-mobile-devops",
+        "./skills/react-native-mobile-design"
+      ],
+      "commands": [
+        "./commands/eas-build.md",
+        "./commands/eas-deploy.md",
+        "./commands/eas-workflow.md"
+      ]
     }
   ]
 }

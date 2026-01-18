@@ -12,8 +12,5 @@
         "repo": "anthropics/skills"
       }
     }
-  },
-  "enabledPlugins": {
-    "git-commands@ClaudeKit": true
   }
 }
